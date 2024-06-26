@@ -3,161 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamster Kombat</title>
+    <title>Tap to Hern</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #131313; /* Dark background */
-            font-family: 'Arial', sans-serif;
-        }
-
-        .game-container {
-            width: 90%;
-            max-width: 350px;
-            background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
-            border-radius: 15px;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2e3b4e, #3b5998);
             color: white;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            position: relative;
         }
-
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-        }
-
-        .profile-section, .game-stats {
-            display: flex;
-            align-items: center;
-        }
-
-        .profile-icon, .coin-icon, .menu-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        .profile-details {
-            margin-left: 10px;
-        }
-
-        .user-name {
-            font-weight: bold;
-        }
-
-        .user-level, .coins {
-            font-size: 0.9rem;
-        }
-
-        .content {
-            padding: 20px;
+        .game-container {
             text-align: center;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-
-        .energy-bar {
-            background: #555;
+        .tap-button, .test-button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 24px;
+            color: white;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s ease, background 0.3s;
+            margin-top: 10px;
+            background-image: url('https://media.licdn.com/dms/image/C4D0BAQHZDqQDHwDnAg/company-logo_200_200/0/1649320274539/wolf_of_tuscany_consulenza_blockchain_metaverso_logo?e=1727308800&v=beta&t=Eyij4Eb__AV883IYJXT1WpNtqzvIDbdC3onTmGQLX64');
+            background-size: cover;
+            background-position: center;
+        }
+        .tap-button:hover, .test-button:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        }
+        .tap-button:active, .test-button:active {
+            transform: scale(0.9);
+        }
+        .score, .level {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .loading-bar-container {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #555;
             border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loading-bar {
             height: 20px;
             width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .energy-bar-fill {
             background: linear-gradient(135deg, #00c6ff, #0072ff);
-            width: 100%;
-            height: 100%;
-            transition: width 0.5s ease;
-        }
-
-        .energy-text {
-            margin-top: 5px;
-        }
-
-        .buttons-container {
-            margin-top: 20px;
-        }
-
-        .play-button, .boost-button {
-            background: #ff416c;
-            border: none;
             border-radius: 5px;
-            padding: 10px 20px;
+            transition: width 0.1s;
+        }
+        .counter {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             color: white;
-            cursor: pointer;
+            font-weight: 700;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
             width: 100%;
-            margin-bottom: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .play-button:hover, .boost-button:hover {
-            background: #ff4b2b;
-        }
-
-        .game-footer {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .menu-icon {
-            opacity: 0.6;
+            height: 100px;
+            background-image: url('https://media.licdn.com/dms/image/C4E1BAQFz3wvFhvpKdg/company-background_10000/0/1649405279951/wolf_of_tuscany_consulenza_blockchain_metaverso_cover?e=2147483647&v=beta&t=iS1-OcaBf0kjg046A8s_OUJGb_wrfA_gT0YiXk6pL3k');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <header class="game-header">
-            <div class="profile-section">
-                <img src="placeholder-profile.png" alt="Profile Icon" class="profile-icon">
-                <div class="profile-details">
-                    <p class="user-name">Escworks (CEO)</p>
-                    <div class="user-level">Silver 2/10</div>
-                </div>
-            </div>
-            <div class="game-stats">
-                <span class="coins">7,122</span>
-                <img src="placeholder-coin.png" alt="Coin" class="coin-icon">
-            </div>
-        </header>
-        <div class="content">
-            <div class="progress-container">
-                <div class="energy-bar">
-                    <div class="energy-bar-fill"></div>
-                </div>
-                <span class="energy-text">1500 / 1500</span>
-            </div>
-            <div class="buttons-container">
-                <button class="play-button">Play</button>
-                <button class="boost-button">Boost</button>
-            </div>
+        <div class="loading-bar-container">
+            <div class="counter" id="counter">100</div>
+            <div class="loading-bar" id="loading-bar"></div>
         </div>
-        <footer class="game-footer">
-            <img src="placeholder-menu.png" alt="Menu Icon" class="menu-icon">
-        </footer>
+        <button class="tap-button" id="tap-button" onclick="increaseScore()">Tap me!</button>
+        <button class="test-button" id="test-button" onclick="decreaseByFifty()">Decrease by 50</button>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="level">Level: <span id="level">1</span></div>
     </div>
+    <div class="footer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const playButton = document.querySelector('.play-button');
-            const boostButton = document.querySelector('.boost-button');
-            const energyBarFill = document.querySelector('.energy-bar-fill');
+        let score = 0;
+        let level = 1;
+        const levelUpThreshold = 10;
+        let maxLoadingValue = 100;
+        let loadingValue = maxLoadingValue;
+        const loadingBar = document.getElementById('loading-bar');
+        const counter = document.getElementById('counter');
+        const tapButton = document.getElementById('tap-button');
 
-            playButton.addEventListener('click', function() {
-                energyBarFill.style.width = '0%';
-                setTimeout(() => {
-                    energyBarFill.style.width = '100%';
-                }, 500);
-            });
-
-            boostButton.addEventListener('click', function() {
-                alert('Boost activated!');
-            });
+        const clickSound = new Howl({
+            src: ['https://www.myinstants.com/media/sounds/button-17.mp3']
         });
+
+        function updateLoadingBar() {
+            loadingBar.style.width = (loadingValue / maxLoadingValue * 100) + '%';
+            counter.textContent = loadingValue;
+        }
+
+        function rechargeLoadingBar() {
+            if (loadingValue < maxLoadingValue) {
+                loadingValue++;
+                updateLoadingBar();
+            }
+        }
+
+        function decreaseLoadingBar(amount) {
+            loadingValue -= amount;
+            if (loadingValue <= 0) {
+                loadingValue = 0;
+                maxLoadingValue *= 2;
+                loadingValue = maxLoadingValue;
+            }
+            updateLoadingBar();
+        }
+
+        function decreaseByFifty() {
+            decreaseLoadingBar(50);
+        }
+
+        function increaseScore() {
+            if (loadingValue > 0) {
+                clickSound.play();
+                score++;
+                document.getElementById('score').textContent = score;
+                decreaseLoadingBar(1);
+
+                if (score % levelUpThreshold === 0) {
+                    level++;
+                    document.getElementById('level').textContent = level;
+                    document.body.style.backgroundColor = getRandomColor();
+                }
+            }
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Avvia l'intervallo per ricaricare la barra
+        setInterval(rechargeLoadingBar, 1000);
     </script>
 </body>
 </html>
