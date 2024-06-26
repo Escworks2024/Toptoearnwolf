@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Tap to Hern</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -108,8 +108,7 @@
         const levelUpThreshold = 10;
         let maxLoadingValue = 100;
         let loadingValue = maxLoadingValue;
-        const loadingBar =
-document.getElementById('loading-bar');
+        const loadingBar = document.getElementById('loading-bar');
         const counter = document.getElementById('counter');
         const tapButton = document.getElementById('tap-button');
 
@@ -169,6 +168,17 @@ document.getElementById('loading-bar');
 
         // Avvia l'intervallo per ricaricare la barra
         setInterval(rechargeLoadingBar, 1000);
+    </script>
+    <script>
+        let lastTap = 0;
+        document.addEventListener('touchend', function(event) {
+            let currentTime = new Date().getTime();
+            let tapLength = currentTime - lastTap;
+            if (tapLength < 500 && tapLength > 0) {
+                event.preventDefault();
+            }
+            lastTap = currentTime;
+        });
     </script>
 </body>
 </html>
