@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap to Hern</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2e3b4e, #3b5998);
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        .game-container {
+            text-align: center;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .tap-button, .test-button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 24px;
+            color: white;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s ease, background 0.3s;
+            margin-top: 10px;
+            background-image: url('https://media.licdn.com/dms/image/C4D0BAQHZDqQDHwDnAg/company-logo_200_200/0/1649320274539/wolf_of_tuscany_consulenza_blockchain_metaverso_logo?e=1727308800&v=beta&t=Eyij4Eb__AV883IYJXT1WpNtqzvIDbdC3onTmGQLX64');
+            background-size: cover;
+            background-position: center;
+        }
+        .tap-button:hover, .test-button:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        }
+        .tap-button:active, .test-button:active {
+            transform: scale(0.9);
+        }
+        .score, .level {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .loading-bar-container {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #555;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loading-bar {
+            height: 20px;
+            width: 100%;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border-radius: 5px;
+            transition: width 0.1s;
+        }
+        .counter {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: 700;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background-image: url('https://media.licdn.com/dms/image/C4E1BAQFz3wvFhvpKdg/company-background_10000/0/1649405279951/wolf_of_tuscany_consulenza_blockchain_metaverso_cover?e=2147483647&v=beta&t=iS1-OcaBf0kjg046A8s_OUJGb_wrfA_gT0YiXk6pL3k');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="loading-bar-container">
+            <div class="counter" id="counter">100</div>
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <button class="tap-button" id="tap-button" onclick="increaseScore()">Tap me!</button>
+        <button class="test-button" id="test-button" onclick="decreaseByFifty()">Decrease by 50</button>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="level">Level: <span id="level">1</span></div>
+    </div>
+    <div class="footer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script>
+        let score = 0;
+        let level = 1;
+        const levelUpThreshold = 10;
+        let maxLoadingValue = 100;
+        let loadingValue = maxLoadingValue;
+        const loadingBar =
+document.getElementById('loading-bar');
+        const counter = document.getElementById('counter');
+        const tapButton = document.getElementById('tap-button');
+
+        const clickSound = new Howl({
+            src: ['https://www.myinstants.com/media/sounds/button-17.mp3']
+        });
+
+        function updateLoadingBar() {
+            loadingBar.style.width = (loadingValue / maxLoadingValue * 100) + '%';
+            counter.textContent = loadingValue;
+        }
+
+        function rechargeLoadingBar() {
+            if (loadingValue < maxLoadingValue) {
+                loadingValue++;
+                updateLoadingBar();
+            }
+        }
+
+        function decreaseLoadingBar(amount) {
+            loadingValue -= amount;
+            if (loadingValue <= 0) {
+                loadingValue = 0;
+                maxLoadingValue *= 2;
+                loadingValue = maxLoadingValue;
+            }
+            updateLoadingBar();
+        }
+
+        function decreaseByFifty() {
+            decreaseLoadingBar(50);
+        }
+
+        function increaseScore() {
+            if (loadingValue > 0) {
+                clickSound.play();
+                score++;
+                document.getElementById('score').textContent = score;
+                decreaseLoadingBar(1);
+
+                if (score % levelUpThreshold === 0) {
+                    level++;
+                    document.getElementById('level').textContent = level;
+                    document.body.style.backgroundColor = getRandomColor();
+                }
+            }
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Avvia l'intervallo per ricaricare la barra
+        setInterval(rechargeLoadingBar, 1000);
+    </script>
+</body>
+</html>
