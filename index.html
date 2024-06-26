@@ -3,74 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Interface</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <title>Hamster Kombat</title>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        body, html {
             margin: 0;
-            background: #131313; /* Dark background */
-            color: white;
+            padding: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            background: #131313; /* Dark background */
+            font-family: 'Arial', sans-serif;
         }
+
         .game-container {
             width: 90%;
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.8); /* Translucent black background */
+            max-width: 350px;
+            background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
             border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            color: white;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
         }
-        .status-bar {
+
+        .game-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            padding: 10px;
         }
-        .progress-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-image: linear-gradient(to top, #ff416c, #ff4b2b);
+
+        .profile-section, .game-stats {
             display: flex;
-            justify-content: center;
             align-items: center;
-            color: black;
+        }
+
+        .profile-icon, .coin-icon, .menu-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .profile-details {
+            margin-left: 10px;
+        }
+
+        .user-name {
             font-weight: bold;
         }
-        .buttons {
-            display: flex;
-            justify-content: space-around;
+
+        .user-level, .coins {
+            font-size: 0.9rem;
         }
-        button {
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .energy-bar {
+            background: #555;
+            border-radius: 5px;
+            height: 20px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .energy-bar-fill {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            width: 100%;
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .energy-text {
+            margin-top: 5px;
+        }
+
+        .buttons-container {
+            margin-top: 20px;
+        }
+
+        .play-button, .boost-button {
             background: #ff416c;
-            color: white;
             border: none;
             border-radius: 5px;
             padding: 10px 20px;
+            color: white;
             cursor: pointer;
-            transition: background 0.3s;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
         }
-        button:hover {
+
+        .play-button:hover, .boost-button:hover {
             background: #ff4b2b;
+        }
+
+        .game-footer {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .menu-icon {
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <div class="status-bar">
-            <div>👤 User Profile</div>
-            <div class="progress-circle">100%</div>
-            <div>💰 7,122</div>
+        <header class="game-header">
+            <div class="profile-section">
+                <img src="placeholder-profile.png" alt="Profile Icon" class="profile-icon">
+                <div class="profile-details">
+                    <p class="user-name">Escworks (CEO)</p>
+                    <div class="user-level">Silver 2/10</div>
+                </div>
+            </div>
+            <div class="game-stats">
+                <span class="coins">7,122</span>
+                <img src="placeholder-coin.png" alt="Coin" class="coin-icon">
+            </div>
+        </header>
+        <div class="content">
+            <div class="progress-container">
+                <div class="energy-bar">
+                    <div class="energy-bar-fill"></div>
+                </div>
+                <span class="energy-text">1500 / 1500</span>
+            </div>
+            <div class="buttons-container">
+                <button class="play-button">Play</button>
+                <button class="boost-button">Boost</button>
+            </div>
         </div>
-        <div class="buttons">
-            <button>Play</button>
-            <button>Settings</button>
-            <button>Friends</button>
-        </div>
+        <footer class="game-footer">
+            <img src="placeholder-menu.png" alt="Menu Icon" class="menu-icon">
+        </footer>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.querySelector('.play-button');
+            const boostButton = document.querySelector('.boost-button');
+            const energyBarFill = document.querySelector('.energy-bar-fill');
+
+            playButton.addEventListener('click', function() {
+                energyBarFill.style.width = '0%';
+                setTimeout(() => {
+                    energyBarFill.style.width = '100%';
+                }, 500);
+            });
+
+            boostButton.addEventListener('click', function() {
+                alert('Boost activated!');
+            });
+        });
+    </script>
 </body>
 </html>
