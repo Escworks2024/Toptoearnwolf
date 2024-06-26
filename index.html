@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tap to Hern</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
+<style type="text/css">body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -116,33 +111,30 @@
             background-position: center;
             opacity: 0.5;
         }
-    </style>
-</head>
-<body>
-    <div class="header-container">
-        <div class="user-info">
-            <img src="https://via.placeholder.com/30" class="user-logo" alt="Logo">
-            WolfOfTuscany
-            <div class="loading-bar-small"></div>
-        </div>
-        <div class="profit-info">
-            Profitto orario
-        </div>
-    </div>
-    <div class="game-container">
-        <div class="loading-bar-container">
-            <div class="counter" id="counter">100</div>
-            <div class="loading-bar" id="loading-bar"></div>
-        </div>
-        <button class="tap-button" id="tap-button" onclick="increaseScore()">Tap me!</button>
-        <button class="test-button" id="test-button" onclick="decreaseByFifty()">Decrease by 50</button>
-        <div class="score">Score: <span id="score">0</span></div>
-        <div class="level">Level: <span id="level">1</span></div>
-    </div>
-    <div class="footer"></div>
+</style>
+<div class="header-container">
+<div class="user-info"><img alt="Logo" class="user-logo" src="https://console.yorapp.it/personalfiles/2367/image/eyes-586849_1920.jpg" style="width: 50px; height: 21px;" />
+<p>WolfOfTuscany</p>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-    <script>
+<p>&nbsp; &nbsp; &nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</div>
+
+<div class="profit-info">Profitto orario di Wolf of Tuscany&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tap to EARN V0.1</div>
+</div>
+
+<div class="game-container"><button class="tap-button" id="tap-button" onclick="increaseScore()">Tap me!</button><button class="test-button" id="test-button" onclick="decreaseByFifty()">Decrease by 50</button>
+
+<div class="score">Score: <span id="score">0</span></div>
+
+<div class="level">Level: <span id="level">1</span></div>
+</div>
+
+<div class="footer">&nbsp;</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script><script>
         let score = 0;
         let level = 1;
         const levelUpThreshold = 10;
@@ -209,5 +201,3 @@
         // Avvia l'intervallo per ricaricare la barra
         setInterval(rechargeLoadingBar, 1000);
     </script>
-</body>
-</html>
