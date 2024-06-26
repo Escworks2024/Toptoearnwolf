@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +41,7 @@
             background-image: url('https://media.licdn.com/dms/image/C4D0BAQHZDqQDHwDnAg/company-logo_200_200/0/1649320274539/wolf_of_tuscany_consulenza_blockchain_metaverso_logo?e=1727308800&v=beta&t=Eyij4Eb__AV883IYJXT1WpNtqzvIDbdC3onTmGQLX64');
             background-size: cover;
             background-position: center;
+            touch-action: manipulation; /* Disabilita il doppio tap zoom */
         }
         .tap-button:hover, .test-button:hover {
             background: linear-gradient(135deg, #ff4b2b, #ff416c);
@@ -174,7 +174,7 @@
         let lastTap = 0;
         const tapButton = document.getElementById('tap-button');
 
-        tapButton.addEventListener('touchend', function(event) {
+        tapButton.addEventListener('touchstart', function(event) {
             let currentTime = new Date().getTime();
             let tapLength = currentTime - lastTap;
             if (tapLength < 500 && tapLength > 0) {
