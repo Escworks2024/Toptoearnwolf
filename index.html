@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #333;
+            background-color: #1a1a1a;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
@@ -26,27 +26,29 @@
             border: 2px solid #000;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            border-radius: 10px;
         }
 
         .player {
             position: absolute;
-            bottom: 150px; /* Raised by 5mm */
+            bottom: 150px;
             width: 150px;
             height: 150px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             background-size: cover;
             background-position: center;
             border-radius: 50%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .player:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
         }
 
         .player:active {
-            transform: scale(0.9);
+            transform: scale(0.95);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
@@ -57,7 +59,7 @@
 
         #controls {
             position: absolute;
-            bottom: 330px; /* Raised by 5mm */
+            bottom: 330px;
             width: 100%;
             text-align: center;
         }
@@ -71,6 +73,11 @@
             cursor: pointer;
             border-radius: 5px;
             box-shadow: 0 5px #cc3700;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        #start:hover {
+            background-color: #ff5714;
         }
 
         #start:active {
@@ -80,11 +87,11 @@
 
         #scoreboard {
             position: absolute;
-            top: 20px;
+            top: 1px;
             width: 100%;
             text-align: center;
             color: #fff;
-            font-size: 20px;
+            font-size: 24px;
             text-shadow: 1px 1px 2px #000;
         }
 
@@ -94,7 +101,7 @@
             width: 100%;
             text-align: center;
             color: #fff;
-            font-size: 20px;
+            font-size: 24px;
             text-shadow: 1px 1px 2px #000;
         }
 
@@ -119,12 +126,12 @@
             background-size: cover;
             z-index: -1;
             opacity: 0.5;
-            animation: background-move 5s linear infinite;
+            animation: background-move 10s linear infinite;
         }
 
         @keyframes background-move {
             from { background-position: 0 0; }
-            to { background-position: -800px 0; }
+            to { background-position: -1600px 0; }
         }
 
         .hit-effect {
@@ -134,12 +141,6 @@
             background-image: url('hit.png');
             background-size: cover;
             display: none;
-            animation: hit-effect-animation 0.5s steps(5) infinite;
-        }
-
-        @keyframes hit-effect-animation {
-            from { background-position: 0 0; }
-            to { background-position: -500px 0; }
         }
 
         .hit-text {
@@ -149,17 +150,10 @@
             font-weight: bold;
             text-shadow: 1px 1px 2px #fff;
             display: none;
-            animation: fade-in-out 1s ease;
-        }
-
-        @keyframes fade-in-out {
-            0% { opacity: 0; transform: translateY(20px); }
-            50% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
         }
 
         .loading-bar-container {
-            margin-top: 20px;
+            margin-top: 30px;
             width: 100%;
             background-color: #555;
             border-radius: 5px;
@@ -168,7 +162,7 @@
         }
 
         .loading-bar {
-            height: 20px;
+            height: 28px;
             width: 100%;
             background: linear-gradient(135deg, #00c6ff, #0072ff);
             border-radius: 5px;
