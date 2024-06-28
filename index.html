@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1a1a1a;
+            background-color: #6a0dad; /* Impostato colore di sfondo viola */
             font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
@@ -270,7 +270,6 @@
 
                 if (score % levelUpThreshold === 0) {
                     level++;
-                    document.body.style.backgroundColor = getRandomColor();
                 }
 
                 if (score >= 100) {
@@ -335,15 +334,6 @@
                 gameOver.textContent = 'Game Over! Score: ' + score;
             }
             startButton.disabled = false;
-        }
-
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
     </script>
 </body>
