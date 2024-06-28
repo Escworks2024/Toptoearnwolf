@@ -1,203 +1,210 @@
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
-<style type="text/css">body {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap to Earn - Hamster Kombat</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #2e3b4e, #3b5998);
-            color: white;
+            background-color: #333;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
+        }
+
+        #game-container {
+            width: 800px;
+            height: 600px;
             position: relative;
-        }
-        .header-container {
-            position: absolute;
-            top: 10px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            font-size: 20px;
-        }
-        .user-logo {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-        }
-        .loading-bar-small {
-            width: 200px; /* Adjusted to text width */
-            height: 5px;
-            background: pink;
-            border-radius: 3px;
-            margin-top: 5px;
-        }
-        .profit-info {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 10px;
-            border-radius: 10px;
-        }
-        .game-container {
-            text-align: center;
-            width: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin-top: 60px; /* Spacing from top elements */
-        }
-        .tap-button, .test-button {
-            display: inline-block;
-            padding: 20px 40px;
-            font-size: 24px;
-            color: white;
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s ease, background 0.3s;
-            margin-top: 10px;
-        }
-        .tap-button:hover, .test-button:hover {
-            background: linear-gradient(135deg, #ff4b2b, #ff416c);
-        }
-        .tap-button:active, .test-button:active {
-            transform: scale(0.9);
-        }
-        .score, .level {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .loading-bar-container {
-            margin-top: 20px;
-            width: 100%;
-            background-color: #555;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-        .loading-bar {
-            height: 20px;
-            width: 100%;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            border-radius: 5px;
-            transition: width 0.1s;
-        }
-        .counter {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            font-weight: 700;
-        }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100px;
-            background-image: url('https://media.licdn.com/dms/image/C4E1BAQFz3wvFhvpKdg/company-background_10000/0/1649405279951/wolf_of_tuscany_consulenza_blockchain_metaverso_cover?e=2147483647&v=beta&t=iS1-OcaBf0kjg046A8s_OUJGb_wrfA_gT0YiXk6pL3k');
+            background-image: url('background.png');
             background-size: cover;
-            background-position: center;
-            opacity: 0.5;
+            border: 2px solid #000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
-</style>
-<div class="header-container">
-<div class="user-info"><img alt="Logo" class="user-logo" src="https://console.yorapp.it/personalfiles/2367/image/eyes-586849_1920.jpg" style="width: 50px; height: 21px;" />
-<p>WolfOfTuscany</p>
 
-<p>&nbsp; &nbsp; &nbsp;</p>
+        .player {
+            position: absolute;
+            bottom: 100px;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-<p>&nbsp;</p>
+        .player:hover {
+            transform: scale(1.1);
+        }
 
-<p>&nbsp;</p>
-</div>
+        #player {
+            left: calc(50% - 75px);
+        }
 
-<div class="profit-info">Profitto orario di Wolf of Tuscany&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tap to EARN V0.1</div>
-</div>
+        .player img {
+            width: 100%;
+            height: auto;
+        }
 
-<div class="game-container"><button class="tap-button" id="tap-button" onclick="increaseScore()">Tap me!</button><button class="test-button" id="test-button" onclick="decreaseByFifty()">Decrease by 50</button>
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
 
-<div class="score">Score: <span id="score">0</span></div>
+        #start {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 5px #cc3700;
+        }
 
-<div class="level">Level: <span id="level">1</span></div>
-</div>
+        #start:active {
+            box-shadow: 0 2px #cc3700;
+            transform: translateY(3px);
+        }
 
-<div class="footer">&nbsp;</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script><script>
+        #scoreboard {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 20px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: #fff;
+            text-shadow: 2px 2px 5px #000;
+            display: none;
+        }
+
+        .background-anim {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('background-animation.png');
+            background-size: cover;
+            z-index: -1;
+            opacity: 0.5;
+            animation: background-move 5s linear infinite;
+        }
+
+        @keyframes background-move {
+            from { background-position: 0 0; }
+            to { background-position: -800px 0; }
+        }
+
+        .hit-effect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: url('hit.png');
+            background-size: cover;
+            display: none;
+            animation: hit-effect-animation 0.5s steps(5) infinite;
+        }
+
+        @keyframes hit-effect-animation {
+            from { background-position: 0 0; }
+            to { background-position: -500px 0; }
+        }
+
+        .hit-text {
+            position: absolute;
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div class="background-anim"></div>
+        <div id="scoreboard">Score: 0</div>
+        <div id="player" class="player">
+            <img src="hamster.png" alt="Player">
+            <div class="hit-effect" id="hit-effect"></div>
+        </div>
+        <div id="controls">
+            <button id="start">Start Game</button>
+        </div>
+        <div id="game-over">Game Over</div>
+        <div class="hit-text" id="hit-text">+1</div>
+    </div>
+    <script>
+        const player = document.getElementById('player');
+        const hitEffect = document.getElementById('hit-effect');
+        const hitText = document.getElementById('hit-text');
+        const scoreboard = document.getElementById('scoreboard');
+        const gameOver = document.getElementById('game-over');
+        const startButton = document.getElementById('start');
+
         let score = 0;
-        let level = 1;
-        const levelUpThreshold = 10;
-        let maxLoadingValue = 100;
-        let loadingValue = maxLoadingValue;
-        const loadingBar = document.getElementById('loading-bar');
-        const counter = document.getElementById('counter');
-        const tapButton = document.getElementById('tap-button');
+        const winningScore = 100;
 
-        const clickSound = new Howl({
-            src: ['https://www.myinstants.com/media/sounds/button-17.mp3']
+        startButton.addEventListener('click', function() {
+            startGame();
         });
 
-        function updateLoadingBar() {
-            loadingBar.style.width = (loadingValue / maxLoadingValue * 100) + '%';
-            counter.textContent = loadingValue;
+        player.addEventListener('click', function() {
+            updateScore();
+        });
+
+        function startGame() {
+            score = 0;
+            scoreboard.textContent = 'Score: 0';
+            gameOver.style.display = 'none';
         }
 
-        function rechargeLoadingBar() {
-            if (loadingValue < maxLoadingValue) {
-                loadingValue++;
-                updateLoadingBar();
+        function updateScore() {
+            score++;
+            scoreboard.textContent = 'Score: ' + score;
+            showHitEffect();
+            showHitText();
+            if (score >= winningScore) {
+                endGame();
             }
         }
 
-        function decreaseLoadingBar(amount) {
-            loadingValue -= amount;
-            if (loadingValue <= 0) {
-                loadingValue = 0;
-                maxLoadingValue *= 2;
-                loadingValue = maxLoadingValue;
-            }
-            updateLoadingBar();
+        function showHitEffect() {
+            hitEffect.style.display = 'block';
+            setTimeout(() => {
+                hitEffect.style.display = 'none';
+            }, 500);
         }
 
-        function decreaseByFifty() {
-            decreaseLoadingBar(50);
+        function showHitText() {
+            hitText.style.left = (player.offsetLeft + player.offsetWidth / 2 - hitText.offsetWidth / 2) + 'px';
+            hitText.style.top = (player.offsetTop - hitText.offsetHeight) + 'px';
+            hitText.style.display = 'block';
+            setTimeout(() => {
+                hitText.style.display = 'none';
+            }, 500);
         }
 
-        function increaseScore() {
-            if (loadingValue > 0) {
-                clickSound.play();
-                score++;
-                document.getElementById('score').textContent = score;
-                decreaseLoadingBar(1);
-
-                if (score % levelUpThreshold === 0) {
-                    level++;
-                    document.getElementById('level').textContent = level;
-                    document.body.style.backgroundColor = getRandomColor();
-                }
-            }
+        function endGame() {
+            gameOver.style.display = 'block';
+            gameOver.textContent = 'You Win! Score: ' + score;
         }
-
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(random() * 16)];
-            }
-            return color;
-        }
-
-        // Avvia l'intervallo per ricaricare la barra
-        setInterval(rechargeLoadingBar, 1000);
     </script>
+</body>
+</html>
